@@ -1,0 +1,26 @@
+# Built application files
+*.apk
+*.ap_
+
+# IntelliJ
+*.iml
+/.idea
+
+# Gradle
+.gradle
+/gradle
+/local.properties
+.gradle/*
+gradlew
+gradlew.bat
+
+# Mac
+.DS_Store
+
+# Generated files
+/build
+/captures
+.externalNativeBuild
+
+IDE
+/captures
