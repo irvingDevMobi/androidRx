@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_main.*
+import mx.com.irvinglop.yahoostock.entity.StockUpdate
+import java.math.BigDecimal
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,7 +24,10 @@ class MainActivity : AppCompatActivity() {
             adapter = stockDataAdapter
         }
 
-        Observable.just("Alphabet", "Apple", "Twitter")
+        Observable.just(
+                StockUpdate("Alphabet", BigDecimal(12.43), Date()),
+                StockUpdate("Apple", BigDecimal(645.1), Date()),
+                StockUpdate("Twitter", BigDecimal(1.43), Date()))
                 .subscribe { text -> stockDataAdapter.add(text) }
     }
 }
