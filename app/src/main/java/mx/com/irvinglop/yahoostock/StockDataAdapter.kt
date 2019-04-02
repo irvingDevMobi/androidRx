@@ -1,5 +1,6 @@
 package mx.com.irvinglop.yahoostock
 
+import android.graphics.Color
 import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
@@ -42,7 +43,13 @@ class StockDataAdapter : RecyclerView.Adapter<StockDataAdapter.StockUpdateViewHo
         private val stockDate: TextView? = view.stockItemDate
 
         fun setPrice(price: BigDecimal) {
-            stockPrice?.text = PRICE_FORMAT.format(price.toFloat())
+            val value = price.toFloat()
+            stockPrice?.text = PRICE_FORMAT.format(value)
+            stockPrice?.setTextColor(when {
+                                         value > 0 -> Color.GREEN
+                                         value < 0 -> Color.RED
+                                         else -> Color.GRAY
+                                     })
         }
 
         fun setDate(date: Date) {
