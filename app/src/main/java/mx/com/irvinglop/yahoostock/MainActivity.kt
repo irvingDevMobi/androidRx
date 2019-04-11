@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
             layoutManager = linearLayoutManager
             adapter = stockDataAdapter
         }
-
+        /*
         Observable.just(
                 StockUpdate("Alphabet", BigDecimal(12.43), Date()),
                 StockUpdate("Apple", BigDecimal(645.1), Date()),
@@ -60,10 +60,20 @@ class MainActivity : AppCompatActivity() {
                 .doOnNext { Log.d(TAG, "onNext: $it Thread:" + Thread.currentThread().name) }
                 .subscribe {
                     Log.d(TAG, "subscribe: $it Thread" + Thread.currentThread().name)
-                }
-    }
+                    Log.e(TAG, "*******************************")
 
-    companion object {
-        const val TAG = "YahooApp"
+                }
+        */
+        Observable.just("one", "two")
+                .subscribeOn(Schedulers.io())
+                .doOnDispose { log("doOnDispose") }
+                .doOnComplete { log("doOnComplete") }
+                .doOnNext { log("doOnNext", it) }
+                .doOnEach { log("doOnEach") }
+                .doOnSubscribe { log("doOnSubscribe") }
+                .doOnTerminate { log("doOnTerminate") }
+                .doFinally { log("doFinally") }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { log("subscribe", it) }
     }
 }
