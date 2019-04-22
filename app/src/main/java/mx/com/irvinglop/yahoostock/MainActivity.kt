@@ -1,18 +1,12 @@
 package mx.com.irvinglop.yahoostock
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.BackpressureStrategy
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_main.*
-import mx.com.irvinglop.yahoostock.entity.StockUpdate
-import java.math.BigDecimal
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -66,6 +60,7 @@ class MainActivity : AppCompatActivity() {
 
                 }
         */
+        /*
         Observable.just("one", "two")
                 .subscribeOn(Schedulers.io())
                 .doOnDispose { log("doOnDispose") }
@@ -77,17 +72,19 @@ class MainActivity : AppCompatActivity() {
                 .doFinally { log("doFinally") }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { log("subscribe", it) }
-
+*/
+        /*
         val observable = PublishSubject.create<Int>()
         observable.observeOn(Schedulers.computation())
                 .subscribe(
                         { log("subscribe", "$it") },
                         { log(it) }
                 )
-        for (i in 0..100000) {
-            //observable.onNext(i)
+        for (i in 0..1000000) {
+            observable.onNext(i)
         }
-
+*/
+        /*
         val observable2 = PublishSubject.create<Int>()
         observable2.toFlowable(BackpressureStrategy.MISSING)
                 .observeOn(Schedulers.computation())
@@ -95,8 +92,19 @@ class MainActivity : AppCompatActivity() {
                         { log("subscribeFlow", "$it") },
                         { log(it) }
                 )
-        for (i in 0..100000) {
+        for (i in 0..1000000) {
             observable2.onNext(i)
+        }
+        */
+        val observable3 = PublishSubject.create<Int>()
+        observable3.toFlowable(BackpressureStrategy.DROP)
+                .observeOn(Schedulers.computation())
+                .subscribe(
+                        { log("subscribeFlow", "$it") },
+                        { log(it) }
+                )
+        for (i in 0..1000000) {
+            observable3.onNext(i)
         }
     }
 }
