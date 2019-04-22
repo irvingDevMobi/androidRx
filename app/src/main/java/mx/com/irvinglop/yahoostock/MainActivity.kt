@@ -3,9 +3,9 @@ package mx.com.irvinglop.yahoostock
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import io.reactivex.BackpressureStrategy
-import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.Completable
+import io.reactivex.Maybe
+import io.reactivex.Single
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -96,6 +96,7 @@ class MainActivity : AppCompatActivity() {
             observable2.onNext(i)
         }
         */
+        /*
         val observable3 = PublishSubject.create<Int>()
         observable3.toFlowable(BackpressureStrategy.DROP)
                 .observeOn(Schedulers.computation())
@@ -106,5 +107,31 @@ class MainActivity : AppCompatActivity() {
         for (i in 0..1000000) {
             observable3.onNext(i)
         }
+        */
+
+        val completable = Completable.fromAction { log("Let's do something") }
+        completable.subscribe(
+                { log("Finished") },
+                { log(it) }
+        )
+
+        Single.just("One Item")
+                .subscribe(
+                        { log(it) },
+                        { log(it) }
+                )
+
+        Maybe.just("Maybe Item")
+                .subscribe(
+                        { log("success $it") },
+                        { log(it) },
+                        { log("onCompletable") }
+                )
+        Maybe.empty<String>()
+                .subscribe(
+                        { log("success $it") },
+                        { log(it) },
+                        { log("onCompletable") }
+                )
     }
 }
