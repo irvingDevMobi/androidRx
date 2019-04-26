@@ -1,0 +1,23 @@
+ext {
+    servicesPaths = [
+            yahooQuery: '"yql?format=json"'
+    ]
+
+    mockPaths = [
+            yahooQuery: '"yql?format=json"'
+    ]
+
+    release = servicesPaths + [
+            apiUrl: '"https://query.yahooapis.com/v1/public/"'
+    ]
+
+    debug = servicesPaths + [
+            appIdSuffix : '.dev',
+            apiUrl: '"https://query.yahooapis.com/v1/public/"'
+    ]
+
+    mock = mockPaths + [
+            appIdSuffix : '.mock',
+            apiUrl: '"https://www.mocky.io/v2/"'
+    ]
+}

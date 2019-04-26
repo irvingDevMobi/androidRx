@@ -16,26 +16,46 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                    'proguard-rules.pro'
         }
+
+        mock {
+            initWith debug
+            applicationIdSuffix ".mock"
+        }
+
+        debug {
+
+        }
+    }
+    android.buildTypes.each { type ->
+        def typeName = rootProject.ext[type.name]
+        type.applicationIdSuffix typeName.appIdSuffix
+        type.buildConfigField 'String', 'API_URL', typeName.apiUrl
+        type.buildConfigField 'String', 'YAHOO_QUERY', typeName.yahooQuery
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "androidx.appcompat:appcompat:$appCompatVersion"
-    implementation "androidx.cardview:cardview:$cardViewVersion"
-    implementation "androidx.core:core-ktx:$coreKtxVersion"
-    implementation "androidx.constraintlayout:constraintlayout:$constraitLayoutVersion"
-    implementation "androidx.recyclerview:recyclerview:$appCompatVersion"
-    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
-    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    implementation fileTree(dir: 'libs', include: ['*.jar']),
+            "androidx.appcompat:appcompat:$appCompatVersion",
+            "androidx.cardview:cardview:$cardViewVersion",
+            "androidx.core:core-ktx:$coreKtxVersion",
+            "androidx.constraintlayout:constraintlayout:$constraitLayoutVersion",
+            "androidx.recyclerview:recyclerview:$appCompatVersion",
+            "com.squareup.okhttp3:logging-interceptor:$okHttpVersion",
+            "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion",
+            "com.squareup.retrofit2:converter-gson:$retrofitVersion",
+            "com.squareup.retrofit2:retrofit:$retrofitVersion",
+            "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion",
+            "io.reactivex.rxjava2:rxjava:$rxJavaVersion",
+            "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
 
     //test
     testImplementation "junit:junit:$jUnitVersion"
 
-    androidTestImplementation "androidx.test:runner:$androidRunnerVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$androidEspressoVersion"
+    androidTestImplementation "androidx.test:runner:$androidRunnerVersion",
+            "androidx.test.espresso:espresso-core:$androidEspressoVersion"
 }

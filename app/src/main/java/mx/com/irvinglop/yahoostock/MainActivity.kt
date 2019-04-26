@@ -7,6 +7,9 @@ import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.activity_main.*
+import mx.com.irvinglop.yahoostock.data.RetrofitYahooServiceFactory
+import mx.com.irvinglop.yahoostock.data.YahooService
+import mx.com.irvinglop.yahoostock.extension.applyOnUi
 
 class MainActivity : AppCompatActivity() {
 
@@ -108,7 +111,7 @@ class MainActivity : AppCompatActivity() {
             observable3.onNext(i)
         }
         */
-
+        /*
         val completable = Completable.fromAction { log("Let's do something") }
         completable.subscribe(
                 { log("Finished") },
@@ -132,6 +135,16 @@ class MainActivity : AppCompatActivity() {
                         { log("success $it") },
                         { log(it) },
                         { log("onCompletable") }
+                )
+        */
+        val query = "select * from yahoo.finance.quote where symbol in " +
+                "('YAHOO', 'APPL', 'GOOG', 'MSFT')"
+        val env = "store://datatables.org/alltableswithkeys"
+        RetrofitYahooServiceFactory.create().yahooQuery(query, env)
+                .applyOnUi()
+                .subscribe(
+                        { log(it.toString()) },
+                        { log(it) }
                 )
     }
 }
