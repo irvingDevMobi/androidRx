@@ -1,23 +1,26 @@
 ext {
     servicesPaths = [
-            yahooQuery: '"yql?format=json"'
+            stockResults: '"stock"',
     ]
 
     mockPaths = [
-            yahooQuery: '"yql?format=json"'
+            stockResults: '"stock"'
     ]
 
     release = servicesPaths + [
-            apiUrl: '"https://query.yahooapis.com/v1/public/"'
+            apiUrl: '"https://www.worldtradingdata.com/api/v1/"',
+            token : '"qlt5AYWZWG8Wqf3ua9CgSCYQPY1Th991jtp7aIjHUi043lULlpg9ltITVrzT"'
     ]
 
     debug = servicesPaths + [
-            appIdSuffix : '.dev',
-            apiUrl: '"https://query.yahooapis.com/v1/public/"'
+            appIdSuffix: '.dev',
+            apiUrl     : '"https://www.worldtradingdata.com/api/v1/"',
+            token      : '"qlt5AYWZWG8Wqf3ua9CgSCYQPY1Th991jtp7aIjHUi043lULlpg9ltITVrzT"'
     ]
 
     mock = mockPaths + [
-            appIdSuffix : '.mock',
-            apiUrl: '"https://www.mocky.io/v2/"'
+            appIdSuffix: '.mock',
+            apiUrl     : '"https://www.mocky.io/v2/"',
+            token      : '"x"',
     ]
 }

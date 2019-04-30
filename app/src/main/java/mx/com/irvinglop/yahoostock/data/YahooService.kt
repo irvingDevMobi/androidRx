@@ -8,7 +8,7 @@ import retrofit2.http.Query
 
 interface YahooService {
 
-    @GET(BuildConfig.YAHOO_QUERY)
+    @GET(BuildConfig.STOCKS_RESULTS)
     fun yahooQuery(
             @Query("q") query: String,
             @Query("env") env: String

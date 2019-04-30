@@ -7,7 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-object RetrofitYahooServiceFactory {
+object ServiceFactory {
 
     private val retrofit: Retrofit
 
@@ -24,4 +24,6 @@ object RetrofitYahooServiceFactory {
     }
 
     fun create(): YahooService = retrofit.create(YahooService::class.java)
+
+    fun createWtdService(): WtdService = retrofit.create(WtdService::class.java)
 }

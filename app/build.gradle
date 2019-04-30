@@ -34,7 +34,8 @@ android {
         def typeName = rootProject.ext[type.name]
         type.applicationIdSuffix typeName.appIdSuffix
         type.buildConfigField 'String', 'API_URL', typeName.apiUrl
-        type.buildConfigField 'String', 'YAHOO_QUERY', typeName.yahooQuery
+        type.buildConfigField 'String', 'API_TOKEN', typeName.token
+        type.buildConfigField 'String', 'STOCKS_RESULTS', typeName.stockResults
     }
 }
 

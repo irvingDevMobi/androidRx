@@ -3,12 +3,8 @@ package mx.com.irvinglop.yahoostock
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import io.reactivex.Completable
-import io.reactivex.Maybe
-import io.reactivex.Single
 import kotlinx.android.synthetic.main.activity_main.*
-import mx.com.irvinglop.yahoostock.data.RetrofitYahooServiceFactory
-import mx.com.irvinglop.yahoostock.data.YahooService
+import mx.com.irvinglop.yahoostock.data.ServiceFactory
 import mx.com.irvinglop.yahoostock.extension.applyOnUi
 
 class MainActivity : AppCompatActivity() {
@@ -137,10 +133,20 @@ class MainActivity : AppCompatActivity() {
                         { log("onCompletable") }
                 )
         */
+        /*
         val query = "select * from yahoo.finance.quote where symbol in " +
                 "('YAHOO', 'APPL', 'GOOG', 'MSFT')"
         val env = "store://datatables.org/alltableswithkeys"
-        RetrofitYahooServiceFactory.create().yahooQuery(query, env)
+
+        ServiceFactory.create().yahooQuery(query, env)
+                .applyOnUi()
+                .subscribe(
+                        { log(it.toString()) },
+                        { log(it) }
+                )
+        */
+        val symbols = "YAHOO,AAPL,GOOG,MSFT"
+        ServiceFactory.createWtdService().stocksResults(symbols, BuildConfig.API_TOKEN)
                 .applyOnUi()
                 .subscribe(
                         { log(it.toString()) },
