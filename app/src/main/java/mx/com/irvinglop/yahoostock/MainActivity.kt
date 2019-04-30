@@ -3,9 +3,12 @@ package mx.com.irvinglop.yahoostock
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import mx.com.irvinglop.yahoostock.data.ServiceFactory
-import mx.com.irvinglop.yahoostock.extension.applyOnUi
+import mx.com.irvinglop.yahoostock.entity.StockUpdate
 
 class MainActivity : AppCompatActivity() {
 
@@ -147,9 +150,16 @@ class MainActivity : AppCompatActivity() {
         */
         val symbols = "YAHOO,AAPL,GOOG,MSFT"
         ServiceFactory.createWtdService().stocksResults(symbols, BuildConfig.API_TOKEN)
-                .applyOnUi()
+                .subscribeOn(Schedulers.io())
+                .toObservable()
+                .map { it.data }
+                .flatMap { Observable.fromIterable(it) }
+                .map { StockUpdate.create(it) }
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        { log(it.toString()) },
+                        { stock ->
+                            stock?.let { stockDataAdapter.add(it) }
+                        },
                         { log(it) }
                 )
     }
