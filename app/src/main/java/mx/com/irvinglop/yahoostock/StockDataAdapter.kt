@@ -33,8 +33,14 @@ class StockDataAdapter : RecyclerView.Adapter<StockDataAdapter.StockUpdateViewHo
     }
 
     fun add(stock: StockUpdate) {
-        data.add(stock)
-        notifyItemInserted(data.size - 1)
+        val indexStockFound = data.indexOfFirst { it.stockSymbol == stock.stockSymbol }
+        if (indexStockFound < 0) {
+            data.add(stock)
+            notifyItemInserted(data.size - 1)
+        } else {
+            data[indexStockFound] = stock
+            notifyItemChanged(indexStockFound)
+        }
     }
 
     class StockUpdateViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -53,7 +59,7 @@ class StockDataAdapter : RecyclerView.Adapter<StockDataAdapter.StockUpdateViewHo
         }
 
         fun setDate(date: Date) {
-            stockDate?.text = DateFormat.format("yyyy-MM-dd hh:mm", date)
+            stockDate?.text = DateFormat.format("yyyy-MM-dd hh:mm:ss", date)
         }
 
         companion object {

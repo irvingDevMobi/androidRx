@@ -4,7 +4,7 @@ ext {
     ]
 
     mockPaths = [
-            stockResults: '"stock"'
+            stockResults: '"5ccb864a330000d806e017b4"'
     ]
 
     release = servicesPaths + [
@@ -20,7 +20,7 @@ ext {
 
     mock = mockPaths + [
             appIdSuffix: '.mock',
-            apiUrl     : '"https://www.mocky.io/v2/"',
+            apiUrl     : '"http://www.mocky.io/v2/"',
             token      : '"x"',
     ]
 }

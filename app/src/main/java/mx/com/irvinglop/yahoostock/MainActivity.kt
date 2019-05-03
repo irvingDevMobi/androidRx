@@ -9,6 +9,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import mx.com.irvinglop.yahoostock.data.ServiceFactory
 import mx.com.irvinglop.yahoostock.entity.StockUpdate
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
@@ -149,9 +150,12 @@ class MainActivity : AppCompatActivity() {
                 )
         */
         val symbols = "YAHOO,AAPL,GOOG,MSFT"
-        ServiceFactory.createWtdService().stocksResults(symbols, BuildConfig.API_TOKEN)
+        Observable.interval(0, 15, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
-                .toObservable()
+                .flatMap {
+                    ServiceFactory.createWtdService().stocksResults(symbols, BuildConfig.API_TOKEN)
+                            .toObservable()
+                }
                 .map { it.data }
                 .flatMap { Observable.fromIterable(it) }
                 .map { StockUpdate.create(it) }
@@ -159,6 +163,7 @@ class MainActivity : AppCompatActivity() {
                 .subscribe(
                         { stock ->
                             stock?.let { stockDataAdapter.add(it) }
+                            log(TAG, stock.toString())
                         },
                         { log(it) }
                 )
